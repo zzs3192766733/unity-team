@@ -53,8 +53,8 @@ public class PlayerSelection : MonoBehaviour
     }
     public static void ShowDescription(string info)
     {
-        playerDescription.text.text = info;
         playerDescription.gameObject.SetActive(true);
+        playerDescription.text.text = info;
     }
     public static void CloseDescription()
     {

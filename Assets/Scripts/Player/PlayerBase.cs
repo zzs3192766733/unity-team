@@ -12,13 +12,15 @@ public class PlayerBase : MonoBehaviour
     public int jumpForce = 10;
     protected bool isClimbing;
     protected Rigidbody2D rb;
-    protected CircleCollider2D co;
+    protected CapsuleCollider2D co;
     protected Animator animator;
+    public LayerMask layerMask;
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        co = GetComponent<CircleCollider2D>();
+        co = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
+        //layerMask = LayerMask.NameToLayer("Road");
     }
     protected void Update()
     {
@@ -27,7 +29,7 @@ public class PlayerBase : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            animator.SetBool("",false);
+            animator.SetBool("Is jumpup",true);
         }
         if(isClimbing)
         {
@@ -37,9 +39,25 @@ public class PlayerBase : MonoBehaviour
         //设置状态机里面的Speed
         animator.SetFloat("Speed", Mathf.Abs(hor));
         PlayerRotation(hor);
+        if (Mathf.Abs(rb.velocity.y) <=0.01f&& !co.IsTouchingLayers(layerMask))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+        }
+        if (rb.velocity.y == 0)
+        {
+            animator.SetBool("Is jumpup", false);
+            animator.SetBool("Is jumpdown", true);
+        }
+        if (co.IsTouchingLayers(layerMask))
+        {
+            Debug.Log("123");
+            animator.SetBool("Is jumpdown", false);
+        }
+
     }
     protected void SwitchAnimator(float hor)
     {
+
     }
     protected void PlayerRotation(float hor)
     {
