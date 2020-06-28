@@ -7,7 +7,7 @@ public class PlayerDescription : MonoBehaviour
 {
     [HideInInspector]
     public Text text;
-    private void Start()
+    private void Awake()
     {
         text = GetComponentInChildren<Text>();
     }
