@@ -7,12 +7,22 @@ public class PlayerSelection : MonoBehaviour
     [HideInInspector]
     public PlayerType playerType;
     private GameObject player;
-    PlayerInfo info;
+    private PlayerInfo info;
+    private static PlayerDescription playerDescription;
+    private float widthRatio;
+    private float heightRatio;
+    private RectTransform rect;
     private void Start()
     {
         playerType = PlayerType.empty;
         player = GameObject.FindWithTag("Player");
         info = GameObject.FindObjectOfType<PlayerInfo>();
+        playerDescription = GameObject.FindObjectOfType<PlayerDescription>();
+        CloseDescription();
+        widthRatio = (float)Screen.width / 1024;
+        heightRatio = (float)Screen.height / 768;
+        rect = GetComponent<RectTransform>();
+        rect.localScale = new Vector2(widthRatio, heightRatio);
     }
     private void Update()
     {
@@ -40,5 +50,14 @@ public class PlayerSelection : MonoBehaviour
             player.GetComponent<Player03>().energy = PlayerInfo.player03Energy;
             Destroy(gameObject);
         }
+    }
+    public static void ShowDescription(string info)
+    {
+        playerDescription.text.text = info;
+        playerDescription.gameObject.SetActive(true);
+    }
+    public static void CloseDescription()
+    {
+        playerDescription.gameObject.SetActive(false);
     }
 }

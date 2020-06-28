@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Look01 : MonoBehaviour
+public class exitDescription : MonoBehaviour
 {
     private Button button;
-    PlayerDescription playerDescription;
     private void Start()
     {
         button = GetComponent<Button>();
-        playerDescription = GameObject.FindObjectOfType<PlayerDescription>();
     }
     private void Update()
     {
@@ -18,6 +16,6 @@ public class Look01 : MonoBehaviour
     }
     private void F()
     {
-        PlayerSelection.ShowDescription(PlayerInfo.player01Info);
+        PlayerSelection.CloseDescription();
     }
 }
