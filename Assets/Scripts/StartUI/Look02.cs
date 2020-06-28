@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Look02 : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Button button;
+    PlayerDescription playerDescription;
+    private void Start()
     {
-        
+        button = GetComponent<Button>();
+        playerDescription = GameObject.FindObjectOfType<PlayerDescription>();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        button.onClick.AddListener(F);
+    }
+    private void F()
+    {
+        PlayerSelection.ShowDescription(PlayerInfo.player02Info);
     }
 }

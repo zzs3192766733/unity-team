@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class Confirm02 : MonoBehaviour
 {
     private Button button;
+    private PlayerSelection playerSelection;
     private void Start()
     {
         button = GetComponent<Button>();
+        playerSelection = GameObject.FindObjectOfType<PlayerSelection>();
     }
     private void Update()
     {
@@ -16,6 +18,6 @@ public class Confirm02 : MonoBehaviour
     }
     private void F()
     {
-        GameObject.FindObjectOfType<PlayerSelection>().playerType = PlayerType.player02;
+        playerSelection.playerType = PlayerType.player02;
     }
 }
