@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    public float hitPoint;
-    public float damage;
-    public float energy;
-    public int moveSpeed = 8;
-    public int climbSpeed = 5;
-    public int jumpForce = 10;
+    private float hitPoint;
+    private float damage;
+    private float energy;
+    private int moveSpeed = 8;
+    private int climbSpeed = 5;
+    private int jumpForce = 10;
     protected bool isClimbing;
     protected Rigidbody2D rb;
     protected CapsuleCollider2D co;
     protected Animator animator;
     public LayerMask layerMask;
+
+    public float HitPoint { get => hitPoint; set => hitPoint = value; }
+    public float Damage { get => damage; set => damage = value; }
+    public float Energy { get => energy; set => energy = value; }
+
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         co = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
-        //layerMask = LayerMask.NameToLayer("Road");
+        layerMask = LayerMask.NameToLayer("Road");
     }
     protected void Update()
     {
@@ -38,12 +43,15 @@ public class PlayerBase : MonoBehaviour
         }
         //设置状态机里面的Speed
         animator.SetFloat("Speed", Mathf.Abs(hor));
-        PlayerRotation(hor);
-        if (Mathf.Abs(rb.velocity.y) <=0.01f&& !co.IsTouchingLayers(layerMask))
+        if (hor > 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        if (rb.velocity.y == 0)
+        else if (hor < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        if (Mathf.Abs(rb.velocity.y) <= 0.01f && rb.velocity.y != 0 && !(rb.velocity.y>=0.00000000000000001f&&rb.velocity.y<=0.000001f))
         {
             animator.SetBool("Is jumpup", false);
             animator.SetBool("Is jumpdown", true);
